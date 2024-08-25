@@ -1,27 +1,29 @@
 ---
-import { SITE_METADATA, NAVIGATION } from "@/consts";
-import HeaderLink from "./HeaderLink.astro";
-import Logo from "./Logo.astro";
-import MobileNav from "@/solid/MobileNav.tsx";
-import ThemeSwitcher from "@/solid/ThemeSwitcher.tsx";
 import { useTranslations } from "@/i18n";
-import Menu from "./Menu.astro";
+import Logo from "./Logo.astro";
 
 const t = useTranslations();
 ---
 
-<header class="flex items-center justify-between py-10">
-  <div class="mr-3 md:w-40 w-20">
-    <a href="/" aria-label={t("siteMetadata.headerTitle")}>
-      <Logo class="w-full" />
-    </a>
-  </div>
-  <div class="flex items-center leading-5 space-x-4 sm:space-x-6">
-    <!-- <Menu /> -->
-    <div class="flex gap-4">
-      <!--<SearchButton />-->
-      <ThemeSwitcher client:only="solid-js" />
-      <!-- <MobileNav client:only="solid-js" /> -->
+<header class="flex items-center py-10">
+    <div class="mr-3">
+        <a href="/" aria-label={t("siteMetadata.headerTitle")}>
+            <Logo class="w-full" />
+        </a>
     </div>
-  </div>
+    <div class="flex-1">
+        <h1
+            class="ml-[-50px] text-center md:text-left md:ml-0 text-6xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14"
+        >
+            Hello!
+        </h1>
+    </div>
+    <!-- <div class="flex items-center leading-5 space-x-4 sm:space-x-6">
+        <Menu />
+        <div class="flex gap-4">
+            <SearchButton />
+            <ThemeSwitcher client:only="solid-js" />
+            <MobileNav client:only="solid-js" />
+        </div>
+    </div> -->
 </header>

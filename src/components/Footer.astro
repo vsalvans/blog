@@ -1,7 +1,4 @@
 ---
-// import SocialIcon from '@/components/social-icons/index.astro'
-import {SITE_METADATA} from '@/consts'
-
 const t = useTranslations();
 
 import Link from "./Link.astro";
@@ -24,18 +21,6 @@ import { useTranslations } from '@/i18n';
             <div>{`© ${new Date().getFullYear()}`}</div>
             <div>{` • `}</div>
             <Link href="/">{t('siteMetadata.title')}</Link>
-        </div>
-        <div class="mb-8 text-sm text-gray-500 dark:text-gray-400">
-            <Link href={SITE_METADATA.siteRepo}>
-                {t('siteMetadata.title')} {` is open source. `}
-                {` View `}
-                <span class="underline">the source</span>
-                {` code on `}
-                <span class="underline">GitHub</span>
-                {` and `}
-                <span class="underline">give it a star</span>
-                {` if you like it.`}
-            </Link>
         </div>
     </div>
 </footer>

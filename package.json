@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro build && astro preview",
+    "build": "astro check && astro build",
+    "preview": "astro build --tsconfig tsconfig.json && astro preview",
     "astro": "astro"
   },
   "dependencies": {

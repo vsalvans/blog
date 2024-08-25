@@ -5,9 +5,10 @@
  */
 export const SITE_METADATA = {
   theme: "system", // Options: system, light, dark
-  siteUrl: "https://tasb.yon.fun/",
-  siteRepo: "https://github.com/wanoo21/tailwind-astro-starting-blog",
+  title: "Víctor Salvans",
+  siteUrl: "https://victor.salvans.me/",
   robots: "index, follow", // Options: index, noindex, follow, nofollow
+  language: "en",
 
   // These are not supported yet
   analytics: {

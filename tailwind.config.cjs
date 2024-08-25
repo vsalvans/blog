@@ -17,7 +17,7 @@ module.exports = {
                 sans: ['Onest', ...fontFamily.sans],
             },
             colors: {
-                primary: colors.pink,
+                primary: colors.orange,
                 gray: colors.gray,
             },
             typography: ({theme}) => ({

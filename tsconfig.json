@@ -1,5 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "exclude": ["public", "dist"],
   "compilerOptions": {
     "strictNullChecks": true,
     "baseUrl": ".",
@@ -8,6 +9,6 @@
       "@/solid/*": ["src/components/solidjs/*"],
     },
     "jsx": "preserve",
-    "jsxImportSource": "solid-js"
+    "jsxImportSource": "solid-js",
   }
 }

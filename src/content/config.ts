@@ -8,7 +8,6 @@ const authors = defineCollection({
     avatar: image().optional(),
     occupation: z.string().optional(),
     shortBio: z.string(),
-    company: z.string().optional(),
     email: z.string().email(),
     twitter: z.string().url().optional(),
     linkedin: z.string().url().optional(),
