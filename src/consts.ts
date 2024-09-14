@@ -24,9 +24,9 @@ export const SITE_METADATA = {
     },
     simpleAnalytics: false, // Activate Simple Analytics
     umami: {
-      site: "", // Add your site id here
-      dataId: "", // Add your data id here
-      host: "/umami.js", // Add your host here
+      host: "https://cloud.umami.is", // Add your site id here
+      dataId: "b4518f91-39a0-4872-a04d-29688a886129", // Add your data id here
+      filename: "/script.js", // Add your host here
     },
     // amplitudeApiKey: null, // Add your Amplitude Api Key here, not yet implemented
     matomo: {

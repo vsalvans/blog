@@ -1,0 +1,12 @@
+
+---
+import { SITE_METADATA } from "@/consts";
+import Umami from "./analytics/Umami.astro";
+
+const {
+  analytics: {
+    umami
+  },
+} = SITE_METADATA;
+---
+{umami.host && umami.dataId && <Umami {...umami} />}
