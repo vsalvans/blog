@@ -15,7 +15,7 @@ const t = useTranslations();
 const author = await getEntry("authors", "default");
 const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
 
-const { name, avatar, email, linkedin, github, twitter, occupation, presentation } = author.data;
+const { avatar, email, linkedin, github, twitter } = author.data;
 ---
 
 <RootLayout
@@ -62,7 +62,7 @@ const { name, avatar, email, linkedin, github, twitter, occupation, presentation
             {!posts.length && t("pages.home.noPosts")}
             {
                 posts.slice(0, ITEMS_PER_PAGE).map((post) => {
-                    const { title, summary, tags } = post.data;
+                    const { title, summary } = post.data;
                     return (
                         <li class="py-6">
                             <article>
