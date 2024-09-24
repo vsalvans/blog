@@ -96,7 +96,7 @@ const { Content, headings } = await post.render();
                             >
                                 <!--TODO: Add support for multiple authors-->
                                 {
-                                    authors.map(({ data, slug }) => (
+                                    authors.map(({ data }) => (
                                         <>
                                             <li class="flex items-center space-x-2">
                                                 {data.avatar && (

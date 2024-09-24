@@ -41,7 +41,7 @@ const hasDefaultSlot = Astro.slots.has("default");
                 page.data.map((post) => {
                     const {
                         slug,
-                        data: { title, summary, tags },
+                        data: { title, summary },
                     } = post;
                     return (
                         <li class="py-4">
