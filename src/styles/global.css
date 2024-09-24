@@ -7,7 +7,7 @@
 }
 
 .footnotes {
-    @apply mt-12 border-t border-gray-200 pt-8 dark:border-gray-700;
+    @apply mt-12 border-t border-gray-700;
 }
 
 .data-footnote-backref {
@@ -23,4 +23,8 @@ input:-webkit-autofill,
 input:-webkit-autofill:focus {
     transition: background-color 600000s 0s,
     color 600000s 0s;
+}
+
+.active {
+    border-bottom: 2px solid #C27828;
 }

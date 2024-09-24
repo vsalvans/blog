@@ -1,0 +1,110 @@
+---
+title: "Why I Chose Remix over NextJS: A Use Case Study"
+cover: '@/assets/why-remix.jpg'
+date: "2024-09-14"
+lastmod: '2024-02-10'
+draft: false
+summary: Explore a real-world case study on choosing Remix over Next.js for migrating a Laravel application to React. Learn about the specific requirements, migration goals, and key factors that influenced this decision, including routing flexibility, SEO benefits, and ease of transition.
+postLayout: simple
+---
+
+# Why I Chose Remix over NextJS: A Use Case Study
+
+## Introduction
+
+In the ever-evolving landscape of web development, choosing the right framework for your project is crucial. This article isn't about declaring whether Remix is better than Next.js or vice versa. Instead, I want to share my experience and reasoning behind selecting Remix for a specific use case. Every project has unique requirements, and understanding how different frameworks align with those needs is key to making an informed decision.
+
+## TL;DR
+
+For our particular scenario, Remix proved to be the best fit due to its simplicity, compatibility with our existing stack, and alignment with our migration goals.
+
+## The Use Case
+
+Our starting point was a web application built with Laravel, using Blade templates and jQuery for the UI. Over time, the application had become overengineered, essentially functioning as a frontend consuming an API that provided all necessary services. We had begun migrating some features to React to allow for progressive updates without disrupting existing services.
+
+Key aspects of our application included:
+
+1. The user area was already in the process of being migrated to React.
+
+2. Laravel was serving as a backend-for-frontend, primarily to handle authentication and API communication. This setup was necessary because authentication credentials and API keys needed to be kept on the server-side.
+
+3. The application didn't require an admin section, as administrative functions were handled by separate applications.
+
+4. The application offered multi-tenant functionality by domain and slug, featuring customizable homepages and service information pages. These public pages were crucial for SEO and formed the core of the application's public-facing content.
+
+## The Goal
+
+Our migration objectives were clear:
+
+1. Transition the entire codebase to React
+2. Eliminate the complexity and middleware challenges that had accumulated in Laravel over the years
+3. Adopt a full-stack JavaScript framework to unify our language across front and backend
+4. Leverage React's component-driven architecture
+5. Enhance user experience through improved performance
+6. Significantly improve developer experience to reduce maintenance costs
+7. Ensure SEO compliance for public pages (homepage and service descriptions)
+8. Implement a system for building customizable pages from static data (JSON content), with the flexibility to later consume this data from an API like Strapi
+
+## Why Remix Over Next.js
+
+While both Remix and Next.js are powerful React-based frameworks, several factors led us to choose Remix for our specific use case:
+
+1. **Familiarity with React Router**: Remix is built on top of React Router, which we were already using in our React components. This familiarity meant a smoother transition for our team and less time spent learning new routing concepts.
+
+2. **Simplicity and Learning Curve**: Remix offers a more straightforward approach to building full-stack React applications. Its conventions are easy to grasp, which we anticipated would lead to faster adoption and mastery by our development team.
+
+3. **SEO-Friendly by Default**: Remix's approach to server-side rendering and its focus on web fundamentals make it inherently SEO-friendly. This aligns perfectly with our need for highly optimized public pages, such as homepages and service description pages.
+
+4. **Data Loading and Actions**: Remix's approach to data loading and actions (formerly called mutations) felt more intuitive and aligned with our existing mental models, making it easier to port our Laravel backend logic.
+
+5. **Flexible and Customizable Routing**: Remix offers extra flexibility and customization in its routing system. For example, Remix allows for manual route configuration via vite.config.ts. This flexibility ensures developers can structure their application in a way that makes sense for their project.
+
+   ```jsx
+    // vite.config.ts
+    import { vitePlugin as remix } from "@remix-run/dev";
+    import { defineConfig } from "vite";
+
+    export default defineConfig({
+      plugins: [
+        remix({
+          routes(defineRoutes) {
+            return defineRoutes((route) => {
+              route("/", "home/route.tsx", { index: true });
+              route("about", "about/route.tsx");
+              route("concerts", "concerts/layout.tsx", () => {
+                route("", "concerts/home.tsx", { index: true });
+                route("trending", "concerts/trending.tsx");
+                route(":city", "concerts/city.tsx");
+              });
+            });
+          },
+        }),
+      ],
+    });
+
+   ```
+
+6. **Nested Routing**: Remix's nested routing capabilities were particularly appealing for our complex application structure, allowing for more intuitive code organization.
+
+7. **Server-Side Rendering (SSR)**: While both frameworks offer SSR, Remix's approach felt more natural and required less configuration to achieve our performance and SEO goals.
+
+8. **Deployment Flexibility**: Remix offers great flexibility in terms of deployment options. It can be deployed to any JavaScript runtime like Node.js, Shopify Oxygen, Cloudflare Workers/Pages, Fastly Compute, Deno, Bun, etc.
+
+9. **Ease of Migration from React**: One of the most compelling reasons for choosing Remix was the ease of migrating our existing React components. Remix allows you to reuse much of your existing React code, including your router setup. For example, if you have an existing `App.tsx` file, you can often use it as a starting point for your Remix app with minimal changes:
+
+   ```jsx
+    //app/routes/_index.tsx
+    export { default } from "~/old-app/app";
+
+    //app/routes/$.tsx
+    export { default } from "~/old-app/app";
+
+   ```
+
+   This structure allows you to keep much of your existing component hierarchy and routing logic, making the migration process smoother and more incremental.
+
+## Conclusion
+
+In conclusion, our choice of Remix over Next.js was driven by our specific use case, existing team knowledge, and migration goals. Remix's philosophy, features, and migration-friendly approach aligned closely with our specific migration path and development goals. The simplicity of Remix, combined with its powerful features and flexibility, promised a smoother transition from our existing Laravel application and a more straightforward path to achieving our objectives.
+
+While your mileage may vary depending on your specific requirements, for us, Remix proved to be the ideal choice for modernizing our application stack while minimizing disruption to our development workflow.

@@ -17,7 +17,7 @@ type Props = {
 const { title, description, via } = Astro.props;
 ---
 
-<div class="flex gap-2" class:list={Astro.props.class}>
+<div class="flex gap-2 pt-2" class:list={Astro.props.class}>
   <FacebookShareButton />
   <LinkedInShareButton />
   <RedditShareButton {title} />
@@ -29,5 +29,9 @@ const { title, description, via } = Astro.props;
   :global(.social-share-btn) {
     width: 24px;
     height: 24px;
+  }
+
+  :global(.social-share-btn svg) {
+      fill: white
   }
 </style>
