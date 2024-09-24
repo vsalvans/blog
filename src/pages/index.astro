@@ -1,11 +1,136 @@
 ---
-import {getEntry} from "astro:content"
-import AuthorLayout from "@/layouts/AuthorLayout.astro";
+import { getCollection } from "astro:content";
 
-const author = await getEntry('authors', 'default')
-const {Content} = await author.render();
+import Link from "@/components/Link.astro";
+import ListPostCover from "@/components/ListPostCover.astro";
+import { ITEMS_PER_PAGE } from "@/consts";
+import { excludeDrafts, sortBlogPosts } from "@/functions";
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import { getEntry } from "astro:content";
+import { Image } from "astro:assets";
+import SocialIcon from "@/components/social-icons/index.astro";
+
+const t = useTranslations();
+const author = await getEntry("authors", "default");
+const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
+
+const { name, avatar, email, linkedin, github, twitter, occupation, presentation } = author.data;
 ---
 
-<AuthorLayout content={author.data} slug={author.slug}>
-	<Content />
-</AuthorLayout>
+<RootLayout
+    title={t("siteMetadata.title")}
+    description={t("siteMetadata.description")}
+>
+<div
+        class="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0"
+    >
+        <div class="flex flex-col  space-x-2 pt-8">
+            {
+                avatar && (
+                    <Image
+                        src={avatar}
+                        alt="avatar"
+                        class="w-60 rounded-2xl drop-shadow-md"
+                    />
+                )
+            }
+            <div class="flex space-x-3 pt-6">
+                {email && <SocialIcon kind="mail" href={`mailto:${email}`} />}
+                {github && <SocialIcon kind="github" href={github} />}
+                {linkedin && <SocialIcon kind="linkedin" href={linkedin} />}
+                {twitter && <SocialIcon kind="twitter" href={twitter} />}
+            </div>
+        </div>
+        <div class="xl:col-span-2 max-w-none d-flex">
+            <div class="prose pb-8 pt-8 text-white text-xl">
+                <h1 class="text-white mb-2 text-4xl">Victor Salvans: Software Engineer</h1>
+                <p>As a software engineer, I'm passionate about creating user-friendly web experiences with React, Remix, and Angular. My journey in tech has taken me from startups to larger companies, always with a focus on crafting efficient and engaging digital solutions.</p>
+                <p>Join me as I share insights and experiences from the ever-evolving world of software development.</p>
+            </div>
+        </div>
+    </div>
+    <div class="divide-ydivide-gray-700">
+        <div class="space-y-2 pb-8 pt-6 md:space-y-5">
+            <h4
+                class="text-3xl font-extrabold leading-9 tracking-tight text-gray-100 sm:leading-10 md:leading-14"
+            >
+                {t("pages.home.latestPosts")}
+            </h4>
+        </div>
+        <ul class="divide-y divide-gray-700">
+            {!posts.length && t("pages.home.noPosts")}
+            {
+                posts.slice(0, ITEMS_PER_PAGE).map((post) => {
+                    const { title, summary, tags } = post.data;
+                    return (
+                        <li class="py-6">
+                            <article>
+                                <div class="space-y-2 xl:grid xl:grid-cols-4 space-x-4 xl:space-y-0 xl:items-stretch">
+                                    <ListPostCover
+                                        {post}
+                                        class="mb-5 xl:col-span-1"
+                                    />
+                                    <div class="space-y-5 xl:col-span-3">
+                                        <div class="space-y-6">
+                                            <div>
+                                                <h2 class="text-2xl font-bold leading-8 tracking-tight">
+                                                    <Link
+                                                        href={`/blog/${post.slug}`}
+                                                        class="text-gray-100"
+                                                    >
+                                                        {title}
+                                                    </Link>
+                                                </h2>
+                                                {/* <div class="flex flex-wrap">
+                                                    {tags.map(({ slug }) => (
+                                                        <Tag slug={slug} />
+                                                    ))}
+                                                </div> */}
+                                            </div>
+                                            <div class="prose max-w-none text-gray-400">
+                                                {summary}
+                                            </div>
+                                        </div>
+                                        <div class="text-base font-medium leading-6">
+                                            <Link
+                                                href={`/blog/${post.slug}`}
+                                                class="text-primary-500 hover:text-primary-400"
+                                                aria-label={t(
+                                                    "pages.home.readMoreAbout",
+                                                    { title },
+                                                )}
+                                            >
+                                                {t("pages.home.readMore")}{" "}
+                                                &rarr;
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+    </div>
+    {
+        posts.length > ITEMS_PER_PAGE && (
+            <div class="flex justify-end text-base font-medium leading-6">
+                <Link
+                    href="/blog"
+                    class="text-primary-500 hover:text-primary-400"
+                    aria-label={t("pages.home.viewAllPosts")}
+                >
+                    {t("pages.home.viewAllPosts")} &rarr;
+                </Link>
+            </div>
+        )
+    }
+    <!--TODO: Add newsletter form-->
+    <!--{siteMetadata.newsletter?.provider && (-->
+    <!--        <div class="flex items-center justify-center pt-4">-->
+    <!--            <NewsletterForm />-->
+    <!--        </div>-->
+    <!--)}-->
+</RootLayout>
